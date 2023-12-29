@@ -1,12 +1,14 @@
 KEYBINDS = {
-    'w': 'move_forward',
-    'a': 'move_left',
-    's': 'move_backward',
-    'd': 'move_right',
-    'up': 'move_forward',
-    'left': 'move_left',
-    'down': 'move_backward',
-    'right': 'move_right',
-    'q': 'rotate_left',
-    'e': 'rotate_right',
+    'w'     : {'linear': {'x':  1.0, 'y':  0.0, 'z': 0.0}, 'angular': {'x': 0.0, 'y': 0.0, 'z':  0.0}},
+    's'     : {'linear': {'x': -1.0, 'y':  0.0, 'z': 0.0}, 'angular': {'x': 0.0, 'y': 0.0, 'z':  0.0}},
+    'a'     : {'linear': {'x':  0.0, 'y':  1.0, 'z': 0.0}, 'angular': {'x': 0.0, 'y': 0.0, 'z':  0.0}},
+    'd'     : {'linear': {'x':  0.0, 'y': -1.0, 'z': 0.0}, 'angular': {'x': 0.0, 'y': 0.0, 'z':  0.0}},
+    
+    'up'    : {'linear': {'x':  1.0, 'y':  0.0, 'z': 0.0}, 'angular': {'x': 0.0, 'y': 0.0, 'z':  0.0}},
+    'down'  : {'linear': {'x': -1.0, 'y':  0.0, 'z': 0.0}, 'angular': {'x': 0.0, 'y': 0.0, 'z':  0.0}},
+    'left'  : {'linear': {'x':  0.0, 'y':  1.0, 'z': 0.0}, 'angular': {'x': 0.0, 'y': 0.0, 'z':  0.0}},
+    'right' : {'linear': {'x':  0.0, 'y': -1.0, 'z': 0.0}, 'angular': {'x': 0.0, 'y': 0.0, 'z':  0.0}},
+    
+    'q'     : {'linear': {'x':  0.0, 'y':  0.0, 'z': 0.0}, 'angular': {'x': 0.0, 'y': 0.0, 'z':  1.0}},
+    'e'     : {'linear': {'x':  0.0, 'y':  0.0, 'z': 0.0}, 'angular': {'x': 0.0, 'y': 0.0, 'z': -1.0}},
 }

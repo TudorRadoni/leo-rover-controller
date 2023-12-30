@@ -1,12 +1,11 @@
-from controller.movement_controller import MovementController
-import keyboard
+from input.input_handler import KeyboardHandler, ControllerHandler
 
 if __name__ == "__main__":
-    controller = MovementController()
-    controller.start()
+    server_address = 'localhost'
+    server_port = 12345
 
-    print("Press Esc to quit.")
-    while True:
-        if keyboard.is_pressed('esc'):
-            print("\nExiting...")
-            break
+    keyboard_handler = KeyboardHandler(server_address, server_port)
+    keyboard_handler.start()
+
+    controller_handler = ControllerHandler(server_address, server_port)
+    controller_handler.start()

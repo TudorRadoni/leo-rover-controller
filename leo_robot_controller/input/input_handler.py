@@ -1,6 +1,7 @@
 import sys
 import keyboard
-from inputs import get_gamepad
+# from inputs import get_gamepad
+import inputs
 
 from .keybinds import KEYBINDS
 from networking.server_communicator import ServerCommunicator
@@ -21,12 +22,26 @@ def map_range(value, leftMin, leftMax, rightMin, rightMax):
 class KeyboardHandler():
     def __init__(self, server_address, server_port):
         self.processor = InputProcessor(server_address, server_port)
+        # self.pressed_keys = set()
 
     def start(self):
-        keyboard.on_press(self._get_key_handler)
+        keyboard.on_press(self._on_key_press)
+        keyboard.on_release(self._on_key_release)
 
-    def _get_key_handler(self, e):
-        self.processor.process_keyboard_input(e.name)
+    def _on_key_press(self, e):
+        # print("+")
+        # self.pressed_keys.add(e.name)
+        self._process_keys(e.name)
+        # self._process_keys()
+
+    def _on_key_release(self, e):
+        print("-")
+    #     self.pressed_keys.discard(e.name)
+    #     self._process_keys()
+
+    def _process_keys(self, e):
+        # print(self.pressed_keys)
+        self.processor.process_keyboard_input(e)
 
 
 class ControllerHandler():
@@ -35,13 +50,22 @@ class ControllerHandler():
         self.processor = InputProcessor(server_address, server_port)
 
     def start(self):
+        gamepad_connected = True
         while True:
-            events = get_gamepad()
-            for event in events:
-                if event.code in self.stick:
-                    self.stick[event.code] = event.state
-                    self.processor.process_controller_input(
-                        self.stick["ABS_X"], self.stick["ABS_Z"], self.stick["ABS_RZ"])
+            try:
+                events = inputs.get_gamepad()
+                for event in events:
+                    if event.code in self.stick:
+                        self.stick[event.code] = event.state
+
+                # Always process the controller input, even if no event has occurred
+                self.processor.process_controller_input(
+                    self.stick["ABS_X"], self.stick["ABS_Z"], self.stick["ABS_RZ"])
+                gamepad_connected = True
+            except inputs.UnpluggedError:
+                if gamepad_connected:
+                    print("No gamepad found. Continuing without gamepad input.")
+                    gamepad_connected = False
 
 
 class InputProcessor:
@@ -61,6 +85,23 @@ class InputProcessor:
             x *= self.resolution
             z *= self.resolution
             self.output_values(x, z)
+    
+    # def process_keyboard_input(self, keys):
+    #     x = 0
+    #     z = 0
+    #     for key in keys:
+    #         if key in KEYBINDS:
+    #             if KEYBINDS[key] == 'quit':
+    #                 print("Telling the server to exit...")
+    #                 self.server_communicator.send_quit_command()
+    #                 return
+
+    #             x += KEYBINDS[key][0]
+    #             z += KEYBINDS[key][1]
+
+    #     x *= self.resolution
+    #     z *= self.resolution
+    #     self.output_values(x, z)
 
     def process_controller_input(self, abs_x, abs_z, abs_rz):
         # Map the values to the correct range

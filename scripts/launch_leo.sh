@@ -6,9 +6,7 @@ pushd ~/leo_ws/src/leo_simulator/leo_gazebo/launch/ > /dev/null
 # If no arguments are provided, list all available worlds
 if [ $# -eq 0 ]; then
     echo "Available worlds:"
-    for file in *.launch; do
-        echo "${file%.*}"
-    done
+    find worlds -name "*.launch" -exec basename {} .launch \;
 else
     # Parse arguments
     while getopts "w:" opt; do

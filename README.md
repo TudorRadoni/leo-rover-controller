@@ -7,6 +7,8 @@ A simple controller for Leo Rover that allows to control the rover's movement us
 
 ... in ROS Noetic (and tested in Gazebo, but should work on real robot too!).
 
+![Diagram](docs/diagram.png)
+
 > **Note:** *A more detailed documentation can be found in the `docs/` directory. There is a more detailed description and more technical details, as well as a walkthrough of setting up the robot and running the controller.*
 
 ## Features

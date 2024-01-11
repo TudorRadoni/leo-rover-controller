@@ -3,13 +3,16 @@
 A simple controller for Leo Rover that allows to control the rover's movement using:
 
 - keyboard ⌨️
-- gamepad 🎮 (currently supported: Xbox)
+- gamepad 🎮 (tested: Xbox One and above)
 
 ... in ROS Noetic (and tested in Gazebo, but should work on real robot too!).
+
+> **Note:** *A more detailed documentation can be found in the `docs/` directory. There is a more detailed description and more technical details, as well as a walkthrough of setting up the robot and running the controller.*
 
 ## Features
 
 - Control the rover's movement using **keyboard** ⌨️ or **gamepad** 🎮
+- Velocity sensitive movement (on gamepads)
 - Mappable keys for keyboard (see [Mapping keys](#mapping-keys))
 - Client (this app) sends commands to the server (Leo Rover) using sockets over TCP/IP
 - Server (Leo Rover) receives commands and publishes them to ROS topics
@@ -21,10 +24,4 @@ The keys can be mapped in the `leo_robot_controller/input/keybinds.py` file. Her
 ## Features to be implemented
 
 - [ ] Add mappable gamepad controlls
-- [ ] Add support for PS5 controller
 - [ ] Add haptic feedback for gamepad
-
-## URGENT TODO
-
-TODO: Write the documentation!!!!!!!!!!
-TODO: Hold controller value until next update

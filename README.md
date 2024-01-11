@@ -3,7 +3,7 @@
 A simple controller for Leo Rover that allows to control the rover's movement using:
 
 - keyboard ⌨️
-- gamepad 🎮 (tested: Xbox One and above)
+- gamepad 🎮 (tested: Xbox One, but should work with any controller)
 
 ... in ROS Noetic (and tested in Gazebo, but should work on real robot too!).
 

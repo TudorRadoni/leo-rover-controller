@@ -13,10 +13,10 @@ def map_range(value, leftMin, leftMax, rightMin, rightMax):
     rightSpan = rightMax - rightMin
 
     # Convert the left range into a 0-1 range (float)
-    valueScaled = (value - leftMin) / leftSpan
+    valueScaled = float(value - leftMin) / leftSpan
 
     # Convert the 0-1 range into a value in the right range.
-    return int(rightMin + (valueScaled * rightSpan))
+    return round(float(rightMin + (valueScaled * rightSpan)), 1)
 
 
 class KeyboardHandler():
@@ -72,7 +72,7 @@ class InputProcessor:
     def __init__(self, server_address, server_port):
         self.server_communicator = ServerCommunicator(
             server_address, server_port)
-        self.resolution = 255
+        self.resolution = 1.0
 
     def process_keyboard_input(self, key):
         if key in KEYBINDS:
@@ -85,7 +85,7 @@ class InputProcessor:
             x *= self.resolution
             z *= self.resolution
             self.output_values(x, z)
-    
+
     # def process_keyboard_input(self, keys):
     #     x = 0
     #     z = 0
@@ -107,14 +107,14 @@ class InputProcessor:
         # Map the values to the correct range
         LSB = map_range(abs_x, -32767, 32767,
                         -self.resolution, self.resolution)
-        LT = int(abs_z)
-        RT = int(abs_rz)
+        LT = map_range(abs_z, 0, 512, -self.resolution, self.resolution)
+        RT = map_range(abs_rz, 0, 512, -self.resolution, self.resolution)
 
-        deadzone = 30
+        deadzone = 0.15
         if abs(LSB) < deadzone:
             LSB = 0
 
-        self.output_values(RT - LT, -LSB)
+        self.output_values(round(RT - LT, 1), -LSB)
 
     def output_values(self, x, z):
         print(f"\rProcessed | x: {x:>5} | z: {z:>5}", end="")

@@ -17,9 +17,11 @@ class NetworkListener:
     def receive_data(self):
         c, addr = self.s.accept()
         data = c.recv(1024)
-        x, z = struct.unpack('ii', data)
+        x, z = struct.unpack('ff', data)
+        x = round(x, 1)
+        z = round(z, 1)
 
-        if x == -40000 and z == -40000:
+        if x == -40000.0 and z == -40000.0:
             raise SystemExit("Quit signal received")
 
         term_width = os.get_terminal_size().columns # get the width of the terminal
